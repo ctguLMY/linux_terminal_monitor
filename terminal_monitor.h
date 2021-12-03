@@ -4,19 +4,18 @@
  * @Autor: Ming
  * @Date: 2021-01-17 22:40:59
  * @LastEditors: Ming
- * @LastEditTime: 2021-01-19 20:37:34
+ * @LastEditTime: 2021-12-03 21:33:51
  */
 #ifndef _MONITOR_H
 #define _MONITOR_H
 
 #define BUFFSIZE 512
 #define WAIT_SECOND 1
-#define MB 1024 * 1024
+#define MB 1024
 
 #define DEBUG 0
 
-typedef struct _CPU_PACKED
-{
+typedef struct _CPU_PACKED {
   char name[16];
   unsigned int user;   //用户模式
   unsigned int nice;   //低优先级的用户模式
@@ -28,38 +27,37 @@ typedef struct _CPU_PACKED
 struct sysinfo info;
 
 /*主机的状态信息结构体*/
-typedef struct _HOST_STATE{
-    int hour;
-    int minute;
-    double cpu_used;
-    double mem_used ;
-}HOST_STATE;
+typedef struct _HOST_STATE {
+  int hour;
+  int minute;
+  double cpu_used;
+  double mem_used;
+} HOST_STATE;
 
 /*收发数据包结构体*/
-typedef struct _RTX_BYTES
-{
+typedef struct _RTX_BYTES {
   long int tx_bytes;
   long int rx_bytes;
   struct timeval rtx_time;
 } RTX_BYTES;
 
 /*网卡设备信息结构体*/
-typedef struct _NET_INTERFACE
-{
+typedef struct _NET_INTERFACE {
   char name[16];  /*网络接口名称*/
   char ip[16];    /*网口IP*/
   double d_speed; /*下行速度*/
   double u_speed; /*上行速度*/
   char mac[13];   /*网口MAC地址*/
   /*上下行速度级别 bit 7~0
-  *bit[0]=d_speed  
-  *bit[1]=u_speed 
-  *1:MB/s 0:KB/s
-  */
-  unsigned char speed_level;   /**/
+   *bit[0]=d_speed
+   *bit[1]=u_speed
+   *1:MB/s 0:KB/s
+   */
+  unsigned char speed_level; /**/
+  RTX_BYTES rtx0_cnt;
+  RTX_BYTES rtx1_cnt;
   struct _NET_INTERFACE *next; /*链表指针*/
 } NET_INTERFACE;
-
 
 /**
  * @description: 必须先打开sysinfo文件，读取内存和运行时间信息
@@ -70,7 +68,7 @@ typedef struct _NET_INTERFACE
 void open_sysinfo();
 
 /**
- * @description: 获取终端运行时间 
+ * @description: 获取终端运行时间
  * @param {int} *hours
  * @param {int} *minutes
  * @return {*}
@@ -109,7 +107,6 @@ void get_mem_usage(double *mem_used);
  * @author: Ming
  */
 void get_cpu_usage(double *cpu_used);
-
 
 /**
  * @description: 打开网络接口设备文件/proc/net/dev
@@ -158,7 +155,9 @@ void rtx_bytes_copy(RTX_BYTES *dest, RTX_BYTES *src);
  * @param {RTX_BYTES} *rtx1
  * @return {*}
  */
-void cal_netinterface_speed(double *u_speed, double *d_speed, unsigned char *level, RTX_BYTES *rtx0, RTX_BYTES *rtx1);
+void cal_netinterface_speed(double *u_speed, double *d_speed,
+                            unsigned char *level, RTX_BYTES *rtx0,
+                            RTX_BYTES *rtx1);
 
 /**
  * @description: 获取主机网卡速度信息
