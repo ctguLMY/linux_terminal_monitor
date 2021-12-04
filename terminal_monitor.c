@@ -4,7 +4,7 @@
  * @Autor: Ming
  * @Date: 2021-01-17 22:40:46
  * @LastEditors: Ming
- * @LastEditTime: 2021-12-03 21:42:02
+ * @LastEditTime: 2021-12-04 21:22:03
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -134,7 +134,8 @@ void get_mem_usage(double *mem_used) {
       break;
     }
   }
-  *mem_used = (info.totalram * 1.0 / 1024 - avimem) * 1.0 / 1024 / 1024;
+  int t = info.totalram / 1024.0;
+  *mem_used = (t - avimem) * 100 / t;
 
 #if DEBUG
   printf("\n");
