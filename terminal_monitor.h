@@ -16,11 +16,11 @@
 #define DEBUG 0
 
 typedef struct _CPU_PACKED {
-  char name[16];
-  unsigned int user;   //用户模式
-  unsigned int nice;   //低优先级的用户模式
-  unsigned int system; //内核模式
-  unsigned int idle;   //空闲处理器时间
+    char name[16];
+    unsigned int user;   //用户模式
+    unsigned int nice;   //低优先级的用户模式
+    unsigned int system; //内核模式
+    unsigned int idle;   //空闲处理器时间
 } CPU_OCCUPY;
 
 /*sysinfo系统相关信息的结构体*/
@@ -28,35 +28,35 @@ struct sysinfo info;
 
 /*主机的状态信息结构体*/
 typedef struct _HOST_STATE {
-  int hour;
-  int minute;
-  double cpu_used;
-  double mem_used;
+    int hour;
+    int minute;
+    double cpu_used;
+    double mem_used;
 } HOST_STATE;
 
 /*收发数据包结构体*/
 typedef struct _RTX_BYTES {
-  long int tx_bytes;
-  long int rx_bytes;
-  struct timeval rtx_time;
+    long int tx_bytes;
+    long int rx_bytes;
+    struct timeval rtx_time;
 } RTX_BYTES;
 
 /*网卡设备信息结构体*/
 typedef struct _NET_INTERFACE {
-  char name[16];  /*网络接口名称*/
-  char ip[16];    /*网口IP*/
-  double d_speed; /*下行速度*/
-  double u_speed; /*上行速度*/
-  char mac[13];   /*网口MAC地址*/
-  /*上下行速度级别 bit 7~0
-   *bit[0]=d_speed
-   *bit[1]=u_speed
-   *1:MB/s 0:KB/s
-   */
-  unsigned char speed_level; /**/
-  RTX_BYTES rtx0_cnt;
-  RTX_BYTES rtx1_cnt;
-  struct _NET_INTERFACE *next; /*链表指针*/
+    char name[16];  /*网络接口名称*/
+    char ip[16];    /*网口IP*/
+    double d_speed; /*下行速度*/
+    double u_speed; /*上行速度*/
+    char mac[13];   /*网口MAC地址*/
+    /*上下行速度级别 bit 7~0
+     *bit[0]=d_speed
+     *bit[1]=u_speed
+     *1:MB/s 0:KB/s
+     */
+    unsigned char speed_level; /**/
+    RTX_BYTES rtx0_cnt;
+    RTX_BYTES rtx1_cnt;
+    struct _NET_INTERFACE *next; /*链表指针*/
 } NET_INTERFACE;
 
 /**
