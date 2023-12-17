@@ -426,9 +426,9 @@ int main() {
   pthread_create(&thread_net_id, NULL, (void *)thread_net, NULL);
   //线程2：CPU、内存信息监控
   pthread_create(&thread_core_id, NULL, (void *)thread_core, NULL);
-
-  while (1) {
-    sleep(2);
-  }
+ 
+  pthread_join(thread_net_id, NULL);
+  pthread_join(thread_core_id, NULL);
+ 
   return 0;
 }
